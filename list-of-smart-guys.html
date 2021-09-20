@@ -1,0 +1,275 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+	
+	<title>Smart Guys</title>
+	
+	<meta name="description" content="Zadanie rekrutacyjne" /> 
+	<meta name="keywords" content="CRUD, application, task list, JavaScript, HTML, SCSS" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet" /> 
+
+  <link rel="stylesheet" href="./styles/styles.css" />
+  
+  <script src="./scripts/navbar.js"></script>
+  <script src="./scripts/getUsers.js"></script>
+  <script src="./scripts/modal.js"></script>
+  <script src="./scripts/postUser.js"></script>
+  <script src="./scripts/putUser.js"></script>
+  <script src="./scripts/deleteUser.js"></script>
+  <script src="./scripts/modal-validation.js"></script>
+  <script src="./scripts/pagination.js"></script>
+  <script src="./scripts/sort.js"></script>
+  <script src="./scripts/filtration.js"></script>
+  <script src="./scripts/choseLimit.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script defer src="./node_modules/@fortawesome/fontawesome-free/js/all.js"></script>
+	
+</head>
+<body>
+  <nav class="navbar navbar-dark bg-primary d-flex justify-content-center">
+    <div class="col-11 col-sm-11 col-md-8 col-lg-8 d-flex justify-content-between">
+      <a class="navbar-brand font-logo d-flex" href="index.html">
+        <img src="./img/logo.png" height="30" class="d-inline-block align-top" alt="">
+        <p class="ms-2">Brainiacs</p>
+      </a>
+      <div class="d-flex align-items-center nav-menu-container"></div>
+    </div>
+  </nav>
+
+  <div class="d-flex justify-content-center mt-2">
+    <div class="col-12 col-sm-11 col-md-8 col-lg-8">
+      <div class="d-flex justify-content-between h2 my-3">
+        <div class="d-flex align-items-center text-black">
+          <i class="fas fa-users"></i>
+          <p class="ms-3">List of smart guys</p>
+        </div>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" onclick="onAddNewBrainiacOpenModal()">
+          Add brainiac
+        </button>
+      </div>
+      <table class="table table-striped">
+        <thead class="bg-secondary text-white">
+          <tr>
+            <th scope="col" class="col-0">Id</th>
+            <th scope="col" class="col-0"></th>
+            <th scope="col" class="col-sm-3">First name</th>
+            <th scope="col" class="col-sm-3">Last name</th>
+            <th scope="col" class="col-6">E-mail</th>
+            <th scope="col" class="col-0"></th>
+          </tr>
+        </thead>
+        <tbody id="smart-guy-list"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center mb-2">
+    <div class="col-12 col-sm-11 col-md-8 col-lg-8 d-flex justify-content-between align-items-center">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination" id="paginationList">
+          <li class="page-item">
+            <a class="page-link text-primary cursor-pointer" id="clickPrev" onclick="onPageClick('-1')" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link text-primary cursor-pointer" id="clickNext" onclick="onPageClick('+1')" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="col-7 col-sm-7 col-md-6 col-lg-7 d-flex align-items-center">
+        <select 
+          id="choseLimit" 
+          class="form-select form-select-lg border-box me-2" 
+          aria-label=".form-select-sm" 
+          onchange="onLimitOnPageChange()"
+        >
+          <option disabled selected>Elements per page</option>
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="15">15</option>
+          <option value="20">20</option>
+          <option value="25">25</option>
+        </select>
+        <select 
+          id="sortSelect" 
+          class="form-select form-select-lg border-box me-2" 
+          aria-label=".form-select-sm" 
+          onchange="onSortByChange()"
+        >
+          <option disabled selected>Sort by</option>
+          <option value="default">Default</option>
+          <option value="first_name">First name</option>
+          <option value="last_name">Last name</option>
+          <option value="email">Email</option>
+        </select>
+        <select 
+          id="orderSelect" 
+          class="form-select form-select-lg border-box" 
+          aria-label=".form-select-sm Disabled" 
+          onchange="onOrderChange()" 
+        >
+          <option disabled selected>Order by</option>
+          <option value="asc">Ascending</option>
+          <option value="desc">Descending</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center mb-4">
+    <div class="col-12 col-sm-11 col-md-8 col-lg-8">
+      <div class="input-group d-flex align-items-center justify-content-end">
+        <div class="form-check me-3">
+          <input class="form-check-input" type="radio" name="check" id="checkAll" value="filter" oninput="radioAllCheck()">
+          <label class="form-check-label text-black" for="checkAll">
+            Select all
+          </label>
+        </div>
+        <div class="form-check me-3">
+          <input class="form-check-input" type="radio" name="check" id="checkFirstName" value="first_name" oninput="radioFirstNameCheck()">
+          <label class="form-check-label text-black" for="checkFirstName">
+            First name
+          </label>
+        </div>
+        <div class="form-check me-3">
+          <input class="form-check-input" type="radio" name="check" id="checkLastName" value="last_name" oninput="radioLastNameCheck()">
+          <label class="form-check-label text-black" for="checkLastName">
+            Last name
+          </label>
+        </div>
+        <div class="form-check me-3">
+          <input class="form-check-input" type="radio" name="check" id="checkEmail" value="email" oninput="radioEmailCheck()">
+          <label class="form-check-label text-black" for="checkEmail">
+            Email
+          </label>
+        </div>
+        <div class="form-outline">
+          <input 
+            id="SearchInput" 
+            type="search"  
+            placeholder="Search"
+            class="form-control border-box"
+            oninput="onSearchInput()"
+            onkeyup="onDoneTypingSearch()"
+          >
+        </div>
+        <button id="search-button" type="button" class="btn btn-primary" onclick="onSearch()">
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <form class="d-flex flex-column needs-validation" novalidate>
+        <div class="modal-content text-black">
+          <div class="modal-header">
+            <h5 class="modal-title" id="userModalHeader">Add new brainiac</h5>
+            <button type="button" class="btn-close btn-sm" data-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3 d-flex justify-content-between">
+              <div>
+                <label for="InputName" class="form-label h5 required">First name</label>
+                <input 
+                  type="text"
+                  minlength="3"
+                  class="form-control border-box" 
+                  id="InputName" 
+                  placeholder="Type in the first name"
+                  oninput="onNameInput()"
+                  required
+                >
+                <div class="invalid-feedback">
+                  Name is required (min 3 char.)
+                </div>
+              </div>
+              <div>
+                <label for="InputLastName" class="form-label h5 required">Last name</label>
+                <input 
+                  type="text"
+                  minlength="3"
+                  class="form-control border-box" 
+                  id="InputLastName"
+                  placeholder="Type in the last name"
+                  oninput="onLastNameInput()"
+                  required
+                >
+                <div class="invalid-feedback">
+                  Last name is required (min 3 char.)
+                </div>
+              </div>
+            </div>
+            <div class="mb-4">
+              <label for="InputEmail" class="form-label h5 required">Email</label>
+                <input 
+                  type="email"
+                  class="form-control border-box" 
+                  id="InputEmail"
+                  placeholder="Type in the email"
+                  oninput="onEmailInput()"
+                  required
+                >
+                <div class="invalid-feedback">
+                  Correct email is required
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button 
+              id="saveBrainiac"
+              type="submit" 
+              class="btn btn-primary"    
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Confirm delete modal -->
+  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content text-black">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteUserModal">Warning</h5>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Are you sure to delete this user?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            No
+          </button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="onConfirmRemoveUser()">
+            Yes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var site = 'list';
+  </script>
+</body>
+</html>
