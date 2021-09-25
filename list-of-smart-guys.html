@@ -10,33 +10,24 @@
 	<meta name="keywords" content="CRUD, application, task list, JavaScript, HTML, SCSS" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
 	
+  <link rel="shortcut icon" href="#">
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet" /> 
 
   <link rel="stylesheet" href="./styles/styles.css" />
   
-  <script src="./scripts/navbar.js"></script>
-  <script src="./scripts/getUsers.js"></script>
-  <script src="./scripts/modal.js"></script>
-  <script src="./scripts/postUser.js"></script>
-  <script src="./scripts/putUser.js"></script>
-  <script src="./scripts/deleteUser.js"></script>
-  <script src="./scripts/modal-validation.js"></script>
-  <script src="./scripts/pagination.js"></script>
-  <script src="./scripts/sort.js"></script>
-  <script src="./scripts/filtration.js"></script>
-  <script src="./scripts/choseLimit.js"></script>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script defer src="./node_modules/@fortawesome/fontawesome-free/js/all.js"></script>
+  <script src='./dist/bundle.js'></script>
 	
 </head>
 <body>
   <nav class="navbar navbar-dark bg-primary d-flex justify-content-center">
     <div class="col-11 col-sm-11 col-md-8 col-lg-8 d-flex justify-content-between">
-      <a class="navbar-brand font-logo d-flex" href="index.html">
+      <a class="navbar-brand font-logo d-flex" href="home.html">
         <img src="./img/logo.png" height="30" class="d-inline-block align-top" alt="">
         <p class="ms-2">Brainiacs</p>
       </a>
@@ -61,8 +52,8 @@
           <tr>
             <th scope="col" class="col-0">Id</th>
             <th scope="col" class="col-0"></th>
-            <th scope="col" class="col-sm-3">First name</th>
-            <th scope="col" class="col-sm-3">Last name</th>
+            <th scope="col" class="col-3">First name</th>
+            <th scope="col" class="col-3">Last name</th>
             <th scope="col" class="col-6">E-mail</th>
             <th scope="col" class="col-0"></th>
           </tr>
